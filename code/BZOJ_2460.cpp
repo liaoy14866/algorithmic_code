@@ -32,7 +32,7 @@ int main(){
 	scanf("%d",&n);
 	for(vi=1;vi<=n;vi++)scanf("%lld%d",&A[vi].x,&A[vi].val),maxx=max(maxx,A[vi].x);
 	sort(A+1,A+n+1,Acmp);
-	leng=ceil(log2(maxx));
+	leng=floor(log2(maxx)+1);
 	linearsubset(leng);
 	printf("%d\n",ans);
 }
