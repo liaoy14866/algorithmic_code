@@ -13,13 +13,10 @@ int n,m;
 int BIT[500010];
 inline void Change(int p,int w){for(;p<=n;p+=p&-p)BIT[p]+=w;}
 int Find(){
-	int p,vi,q;
+	int p,vi;
 	for(vi=n;vi;vi-=vi&-vi)if(BIT[vi])p=vi;
-	for(vi=(p&-p)>>1,q=p-(p&-p);vi;vi>>=1){
-		if(!BIT[q|vi])q|=vi;
-	}
-	q++;
-	return q;
+	for(vi=(p&-p)>>1,p-=p&-p;vi;vi>>=1)if(!BIT[p|vi])p|=vi;
+	return p+1;
 }
 int main(){
 	int vi,opt,id;
@@ -30,4 +27,3 @@ int main(){
 		if(!opt)printf("%d\n",Find());else read(id),Change(id,opt);
 	}
 }
-
