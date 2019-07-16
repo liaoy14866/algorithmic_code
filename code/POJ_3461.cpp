@@ -1,28 +1,40 @@
 #include<cstdio>
-int T,lena,lenb;
-char an[100010],bn[1000010],c;
-int next[100010];
-
+#include<algorithm>
+#include<vector>
+#include<cstring>
+#define ULL unsigned long long
+#define LL long long
+using namespace std;
+char an[10010],bn[1000100];
+int lena,lenb,cnt;
+int next[10010];
+int T;
+void init(){
+	scanf("%s",an+1); scanf("%s",bn+1); next[1]=0;
+	lena=strlen(an+1); lenb=strlen(bn+1); cnt=0;
+}
+void work(){
+	int vi,vj;
+	for(vi=2;vi<=lena;vi++){
+		for(vj=next[vi-1];vj&&an[vj+1]!=an[vi];vj=next[vj]);
+		if(an[vj+1]==an[vi])vj++;
+		next[vi]=vj;
+	}
+	vj=0;
+	for(vi=1;vi<=lenb;vi++){
+		for(;vj&&an[vj+1]!=bn[vi];vj=next[vj]);
+		if(an[vj+1]==bn[vi])vj++;
+		if(vj==lena){
+			cnt++;
+			vj=next[vj];
+		}
+	}
+	printf("%d\n",cnt);
+}
 int main(){
 	scanf("%d\n",&T);
-	//在之后，字符串下标起始位置为1。为了使得下标起始位置为1，用getchar读入。于是在这里scanf的时候要%d\n
-	while(T){
-		T--; int i,time=0;
-		for(i=1,c=getchar();c!='\n'&&c!=-1;c=getchar(),i++)an[i]=c; lena=i-1;
-		for(i=1,c=getchar();c!='\n'&&c!=-1;c=getchar(),i++)bn[i]=c; lenb=i-1;//getchar读入。注意len=i-1
-		next[0]=0;//做KMP
-		for(int i=2;i<=lena;i++){
-			int j=next[i-1];
-			while((an[i]!=an[j+1])&&(j>0))j=next[j];
-			if(an[i]==an[j+1])j++;next[i]=j;
-		}
-		int j=0;
-		for(int i=1;i<=lenb;i++){
-			while((an[j+1]!=bn[i])&&(j>0))j=next[j];
-			if(an[j+1]==bn[i])j++;
-			if(j==lena){time++;j=next[j];}
-		}
-		printf("%d\n",time);//输出
+	for(;T;T--){
+		init();
+		work();
 	}
-	return 0;
 }
