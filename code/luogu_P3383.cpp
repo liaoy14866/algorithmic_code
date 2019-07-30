@@ -13,7 +13,7 @@ inline void read(int &a) {
 }
 int p;
 int n,m;
-int Prime[3000010],Phi[3000010],Inv[3000010];
+int Prime[3000010],Phi[3000010],Inv[3000010],Mu[3000010];
 int top;
 bool flag[3000010];
 
@@ -31,9 +31,11 @@ void Sieve(int Up) {
 	flag[1]=1;
 	Phi[1]=1;
 	Inv[1]=1;
+	Mu[1]=1;
 	for(vi=2; vi<=n; vi++) {
 		if(!flag[vi]) {
 			Phi[vi]=vi-1;
+			Mu[vi]=-1;
 			Inv[vi]=power(vi,p-2,p);
 			Prime[++top]=vi;
 		}
@@ -42,8 +44,10 @@ void Sieve(int Up) {
 			Inv[vi*Prime[vj]]=(LL)Inv[vi]*Inv[Prime[vj]]%p;
 			if(vi%Prime[vj]!=0) {
 				Phi[vi*Prime[vj]]=Phi[vi]*Phi[Prime[vj]];
+				Mu[vi*Prime[vj]]=-Mu[vi];
 			} else {
 				Phi[vi*Prime[vj]]=Phi[vi]*Prime[vj];
+				Mu[vi*Prime[vj]]=0;
 				break;
 			}
 
