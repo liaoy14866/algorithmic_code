@@ -32,7 +32,7 @@ void Sieve(int Up) {
 	Phi[1]=1;
 	Inv[1]=1;
 	Mu[1]=1;
-	for(vi=2; vi<=n; vi++) {
+	for(vi=2; vi<=Up; vi++) {
 		if(!flag[vi]) {
 			Phi[vi]=vi-1;
 			Mu[vi]=-1;
