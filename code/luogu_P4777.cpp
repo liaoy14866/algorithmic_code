@@ -30,12 +30,14 @@ LL exgcd(LL a,LL b,LL &x,LL &y) {
 	return g;
 }
 inline bool axcmodb(LL a,LL &x,LL c,LL b,LL &t) {
-	//ax=c(mod b),x+kt�ǽ⡣return 0��ʾ�޽�
-	LL gys=exgcd(a,b,x,t),cg;//tֻ����ʱʹ��
+	//ax=c(mod b),x+kt是解。return 0表示无解
+	LL gys=exgcd(a,b,x,t),cg;//t只是临时使用
 	if(c%gys)return 0;
 	else cg=c/gys;
 	t=b/gys;
-	x=mul(x,cg,t); if(x<0)x+=t;
+	x%=t;
+	if(x<0)x+=t;//一定要注意，因为mul会转换为ULL，所以要保证x是正的
+	x=mul(x,cg,t); 
 	return 1;
 }
 struct func {
@@ -51,7 +53,7 @@ void unite(func a,func b) {
 int n;
 func A[100010];
 void excrt(int len){
-	//[1..len]�ķ����� 
+	//[1..len]的方程组 
 	int vi;
 	res.c=0; res.m=1;
 	for(vi=1;vi<=len;vi++)unite(res,A[vi]);
